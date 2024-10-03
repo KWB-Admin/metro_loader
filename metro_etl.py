@@ -33,7 +33,6 @@ def transform_data(remove_unneeded_data):
 
 
 def load_data(cleaned_data):
-    os.remove(new_file)
     print("Done")
     return None
 
