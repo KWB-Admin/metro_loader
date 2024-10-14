@@ -1,5 +1,6 @@
 .venv/
 __pycache__/
 data_dump/
+loaded_data/
 log/
-etl_variables.yaml
+yaml/
