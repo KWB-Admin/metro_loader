@@ -15,6 +15,10 @@ logging.basicConfig(
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 
+user = os.getenv("kwb_dw_user")
+host = os.getenv("kwb_dw_host")
+password = os.getenv("kwb_dw_password")
+
 
 def remove_unneeded_data(old_csv_path: str, new_csv_path: str):
     """
@@ -83,6 +87,7 @@ if __name__ == "__main__":
     )
 
     loader.load(
+        credentials=(user, host, password),
         dbname=etl_yaml["db_name"],
         schema=etl_yaml["schema"],
         table_name=etl_yaml["table_name"],
