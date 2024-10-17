@@ -74,6 +74,9 @@ if __name__ == "__main__":
         "--------------- Metro ETL ran on %s ----------------" % (datetime.today())
     )
 
+    if not os.listdir("data_dump"):
+        logger.info("No data is available for loading, quitting program.")
+        exit()
     etl_yaml = load(open("etl_variables.yaml", "r"), Loader)
 
     remove_unneeded_data(
