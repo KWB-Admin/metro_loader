@@ -77,7 +77,7 @@ if __name__ == "__main__":
     if not os.listdir("data_dump"):
         logger.info("No data is available for loading, quitting program.")
         exit()
-    etl_yaml = load(open("etl_variables.yaml", "r"), Loader)
+    etl_yaml = load(open("yaml/etl_variables.yaml", "r"), Loader)
 
     remove_unneeded_data(
         old_csv_path=etl_yaml["old_csv"], new_csv_path=etl_yaml["new_csv"]
@@ -104,6 +104,6 @@ if __name__ == "__main__":
     os.remove(etl_yaml["new_csv"])
     os.remove(etl_yaml["old_csv"])
     os.rename(
-        etl_yaml["transformed_parquet"].strip("data_dump/"),
-        "metro_data_loaded_%s" % (datetime.date(datetime.today())),
+        etl_yaml["transformed_parquet"],
+        "loaded_data/metro_data_loaded_%s.parquet" % (datetime.date(datetime.today())),
     )
