@@ -20,24 +20,25 @@ host = os.getenv("kwb_dw_host")
 password = os.getenv("kwb_dw_password")
 
 
-def remove_unneeded_data(old_csv_path: str, new_csv_path: str):
+def remove_DOM_data(old_csv_path: str, new_csv_path: str):
     """
     This take the metro csv file and writes a new file without
-    the excess data spit out by metro pertaining to Delivery
+    the excess data spit out by metro pertaining to Date-of-Month
+    (DOM) data
 
     Args:
         old_csv_path: str, string path to old data file in
             csv format
         new_csv_path: str, string path to new file which will not
-            include delivery data
+            include DOM data
     """
     with open(old_csv_path, "r") as file_input:
         with open(new_csv_path, "w") as output:
             for line in file_input:
-                if "Delivery" in line:
+                if "DOM" in line:
                     break
                 output.write(line)
-    logger.info("Successfully removed Delivery Data")
+    logger.info("Successfully removed DOM Data")
 
 
 def transform_data(
@@ -79,9 +80,7 @@ if __name__ == "__main__":
         exit()
     etl_yaml = load(open("yaml/etl_variables.yaml", "r"), Loader)
 
-    remove_unneeded_data(
-        old_csv_path=etl_yaml["old_csv"], new_csv_path=etl_yaml["new_csv"]
-    )
+    remove_DOM_data(old_csv_path=etl_yaml["old_csv"], new_csv_path=etl_yaml["new_csv"])
 
     transform_data(
         new_csv_path=etl_yaml["new_csv"],
