@@ -106,7 +106,6 @@ if __name__ == "__main__":
     if not os.listdir("data_dump"):
         logger.info("No data is available for loading, quitting program.")
         exit()
-    etl_yaml = load(open("yaml/etl_variables.yaml", "r"), Loader)
 
     data_type = ""
     for data_file in os.listdir("data_dump"):
@@ -119,9 +118,12 @@ if __name__ == "__main__":
             old_csv_path=etl_yaml["old_csv"], new_csv_path=etl_yaml["new_csv"]
         )
 
+        polars_schema = etl_yaml["polars_schema"]
+        polars_schema = {col: polars.String for col in polars_schema}
+
         transform_data(
             new_csv_path=etl_yaml["new_csv"],
-            schema=etl_yaml["polars_schema"],
+            schema=polars_schema,
             cols_to_drop=etl_yaml["cols_to_drop"],
             new_col_names_dict=etl_yaml["new_col_names"],
             transformed_parquet_path=etl_yaml["transformed_parquet"],
