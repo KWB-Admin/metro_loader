@@ -54,6 +54,9 @@ def transform_data(
 
     Args:
         new_csv_path: str, path to cleaned csv without delivery data
+        schema: dict, schema used for reading csv's with polars. Default
+            behavior is for all columns to be read as polars.String
+        cols_to_drop: list, list of columns to dropped
         new_col_name_dict: dict, dictionary of column names for renaming
             columns
         transformed_parquet_path: str, path to parquet file for writing
