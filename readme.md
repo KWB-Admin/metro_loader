@@ -6,16 +6,17 @@ Once data is downloaded from `metro` in `.csv` format, the files are dumped in t
 
 # Requirements
 
-Currently this relies on one package, `kwb_loader`, which will install three dependies:
+This software relies on these dependies:
 
 1. `psychopg2`
 2. `polars`
 3. `numpy`
+4. `PyYAML`
 
 Please see the requirements.txt file for specific versions.
 
 # Operations
 
-Data from `metro` contains `Date of Month` data, which we don't actually use. To get around this, the file is read and everything past a line containing the word 'DOM' is thrown out. From there, the date is added to the data for meta data purposes, the columns are renamed, and rows with no values in the measurement columns are dropped. 
+Data from `metro` contains `Date of Month` data, which we don't actually use. To get around this, the file is read and everything past a line containing the word `DOM` is thrown out. From there, the date is added to the data for meta data purposes, the columns are renamed, and rows with no values in the measurement columns are dropped. 
 
 The data is then written as a `.parquet` file and loaded into the database.

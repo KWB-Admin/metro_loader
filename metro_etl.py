@@ -1,5 +1,7 @@
 import polars, os, logging
-from kwb_loader import loader
+import psycopg2 as pg
+from psycopg2 import sql
+from numpy import ndarray
 from datetime import datetime
 from yaml import load, Loader
 
@@ -77,14 +79,24 @@ def transform_data(
                 .filter(polars.col("meter_reading_cfs_unrounded") != "0.0")
                 .with_columns(polars.col("reading_date").str.to_date(format="%m/%d/%y"))
             )
-        logger.info("Successfully transformed data")
+        logger.info("Successfully transformed data.")
     except:
         logging.exception("")
     data.write_parquet(transformed_parquet_path)
-    logger.info("Successfully wrote .parquet file")
+    return data
 
 
 def clean_up_numbers(data: polars.DataFrame, numcol: str) -> polars.DataFrame:
+    """
+    This removes special characters such as hypens and commas from
+    numerical data so that it can be properly loaded.
+
+    Args:
+        data: polars.DataFrame, data to be cleaned
+        numcol: column with numerical data
+    Returns:
+        polars.DataFrame, cleaned data
+    """
     data_without_special_chars = data.filter(
         ~(polars.col(numcol).str.contains("-") | polars.col(numcol).str.contains(","))
     ).with_columns(polars.col(numcol).cast(polars.Float64))
@@ -101,53 +113,161 @@ def clean_up_numbers(data: polars.DataFrame, numcol: str) -> polars.DataFrame:
     return polars.concat([data_without_special_chars, special_chars_cleaned])
 
 
+def get_pg_connection(db_name: str) -> pg.extensions.connection:
+    """
+    This tests a connection with a postgres database to ensure that
+    we're loading into a database that actually exists.
+
+    Args:
+        db_name: str, name of database to connect to.
+    Returns:
+        con: pg.extensions.connection, psycopg connection to pg database
+    """
+    try:
+        con = pg.connect(
+            "dbname=%s user=%s host=%s password=%s" % (db_name, user, host, password)
+        )
+        con.autocommit = True
+        logging.info("Successfully connected to %s db" % (db_name))
+        return con
+
+    except pg.OperationalError as Error:
+        logging.error(Error)
+
+
+def check_table_exists(con: pg.extensions.connection, schema_name: str, table: str):
+    """
+    This tests a to ensure the table we'll be writing to exists in
+    the postgres schema provided.
+
+    Args:
+        con: pg.extensions.connection, psycopg connection to pg
+            database
+        schema_name: str, name of postgres schema
+        table_name: str, name of table
+    """
+    cur = con.cursor()
+    command = sql.SQL(
+        """
+        Select * from {schema_name}.{table} limit 1  
+        """
+    ).format(
+        schema_name=sql.Identifier(schema_name),
+        table=sql.Identifier(table),
+    )
+    try:
+        cur.execute(command)
+        if isinstance(cur.fetchall(), list):
+            logging.info("Table exists, continue with loading.")
+    except pg.OperationalError as Error:
+        logging.error(Error)
+
+
+def load_data_into_pg_warehouse(
+    data: polars.DataFrame, etl_yaml: dict, data_params: dict
+):
+    """
+    This loads data into the KWB data warehouse, hosted in a postgres db.
+
+    Args:
+        data: polars.DataFrame, data to be loaded into warehouse
+        etl_yaml: dict, general variables for the etl process
+        data_params: dict, variables for specific data_types, such as
+            recovery and monitoring data
+    """
+    con = get_pg_connection(etl_yaml["db_name"])
+    check_table_exists(con, etl_yaml["schema_name"], data_params["table_name"])
+    try:
+        cur = con.cursor()
+        for row in data.to_numpy():
+            query = build_load_query(row, etl_yaml, data_params)
+            cur.execute(query)
+        cur.close()
+        con.close()
+        logging.info(
+            "Data was successfully loaded to %s.%s.%s"
+            % (etl_yaml["db_name"], etl_yaml["schema_name"], data_params["table_name"])
+        )
+    except pg.OperationalError as Error:
+        con.close()
+        logging.error(Error)
+
+
+def build_load_query(
+    data: ndarray, etl_yaml: dict, data_params: dict
+) -> pg.sql.Composed:
+    """
+    This loads data into the KWB data warehouse, hosted in a postgres db.
+
+    Args:
+        data: numpy.ndarray, row of data to be loaded
+        etl_yaml: dict, general variables for the etl process
+        data_params: dict, variables for specific data_types, such as
+            recovery and monitoring data
+    Returns:
+        pg.sql.Composed, Upsert query used to load data
+    """
+    col_names = sql.SQL(", ").join(
+        sql.Identifier(col) for col in data_params["db_schema"].keys()
+    )
+    values = sql.SQL(" , ").join(sql.Literal(val) for val in data)
+    return sql.SQL(
+        """
+        INSERT INTO {schema_name}.{table} ({col_names}) VALUES ({values})
+        ON CONFLICT ({prim_key}) DO UPDATE SET {update_col} = Excluded.{update_col}
+        """
+    ).format(
+        schema_name=sql.Identifier(etl_yaml["schema_name"]),
+        table=sql.Identifier(data_params["table_name"]),
+        col_names=col_names,
+        values=values,
+        prim_key=sql.SQL(data_params["prim_key"]),
+        update_col=sql.Identifier(data_params["update_col"]),
+    )
+
+
 if __name__ == "__main__":
     logger.info(
         "--------------- Metro ETL ran on %s ----------------" % (datetime.today())
     )
 
     if not os.listdir("data_dump"):
-        logger.info("No data is available for loading, quitting program.")
+        logger.info("No data is available for loading, quitting program.\n")
         exit()
 
     data_type = ""
     for data_file in os.listdir("data_dump"):
+        etl_yaml = load(open("yaml/etl_variables.yaml", "r"), Loader)
         if "Depth" in data_file:
-            etl_yaml = load(open("yaml/monitoring_etl_variables.yaml", "r"), Loader)
+            data_type = "monitoring"
         elif "Production" in data_file:
-            etl_yaml = load(open("yaml/recovery_etl_variables.yaml", "r"), Loader)
+            data_type = "recovery"
+        data_params = etl_yaml[data_type]
 
         remove_DOM_data(
-            old_csv_path=etl_yaml["old_csv"], new_csv_path=etl_yaml["new_csv"]
+            old_csv_path=data_params["old_csv"], new_csv_path=data_params["new_csv"]
         )
 
-        polars_schema = etl_yaml["polars_schema"]
-        polars_schema = {col: polars.String for col in polars_schema}
+        polars_schema = {col: polars.String for col in data_params["polars_schema"]}
 
-        transform_data(
-            new_csv_path=etl_yaml["new_csv"],
+        proc_data = transform_data(
+            new_csv_path=data_params["new_csv"],
             schema=polars_schema,
-            cols_to_drop=etl_yaml["cols_to_drop"],
-            new_col_names_dict=etl_yaml["new_col_names"],
-            transformed_parquet_path=etl_yaml["transformed_parquet"],
+            cols_to_drop=data_params["cols_to_drop"],
+            new_col_names_dict=data_params["new_col_names"],
+            transformed_parquet_path=data_params["transformed_parquet"],
         )
 
-        loader.load(
-            credentials=(user, host, password),
-            dbname=etl_yaml["db_name"],
-            schema=etl_yaml["schema"],
-            table_name=etl_yaml["table_name"],
-            data_path=etl_yaml["transformed_parquet"],
-            prim_key=etl_yaml["prim_key"],
-        )
-        logging.info(
-            "Successfully loaded data into %s.%s.%s \n"
-            % (etl_yaml["db_name"], etl_yaml["schema"], etl_yaml["table_name"])
+        load_data_into_pg_warehouse(
+            data=proc_data,
+            etl_yaml=etl_yaml,
+            data_params=data_params,
         )
         os.remove(etl_yaml["new_csv"])
         os.remove(etl_yaml["old_csv"])
         os.rename(
             etl_yaml["transformed_parquet"],
-            "loaded_data/metro_data_loaded_%s.parquet"
-            % (datetime.date(datetime.today())),
+            "loaded_data/metro_%s_data_loaded_%s.parquet"
+            % (data_type, datetime.date(datetime.today())),
         )
+    logger.info("Succesfully ran Metro ETL.\n")
