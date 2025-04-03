@@ -72,7 +72,7 @@ def transform_data(
             .with_columns(polars.lit(datetime.today()).alias("date_added"))
         )
         if "monitoring" in new_csv_path:
-            data = data.drop_nulls(subset="measurement")
+            data = data.drop_nulls(subset=["state_well_number", "depth_to_water"])
         else:
             data = (
                 data.drop_nulls(subset="meter_reading_cfs_unrounded")
@@ -242,7 +242,7 @@ if __name__ == "__main__":
             data_type = "monitoring"
         elif "Production" in data_file:
             data_type = "recovery"
-        data_params = etl_yaml[data_type]
+        data_params = etl_yaml["data_types"][data_type]
 
         remove_DOM_data(
             old_csv_path=data_params["old_csv"], new_csv_path=data_params["new_csv"]
@@ -263,10 +263,10 @@ if __name__ == "__main__":
             etl_yaml=etl_yaml,
             data_params=data_params,
         )
-        os.remove(etl_yaml["new_csv"])
-        os.remove(etl_yaml["old_csv"])
+        os.remove(data_params["new_csv"])
+        os.remove(data_params["old_csv"])
         os.rename(
-            etl_yaml["transformed_parquet"],
+            data_params["transformed_parquet"],
             "loaded_data/metro_%s_data_loaded_%s.parquet"
             % (data_type, datetime.date(datetime.today())),
         )
