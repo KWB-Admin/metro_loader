@@ -22,7 +22,7 @@ host = os.getenv("kwb_dw_host")
 password = os.getenv("kwb_dw_password")
 
 
-def remove_DOM_data(old_csv_path: str, new_csv_path: str):
+def remove_DOM_data(file_path: str):
     """
     This take the metro csv file and writes a new file without
     the excess data spit out by metro pertaining to Date-of-Month
@@ -34,21 +34,25 @@ def remove_DOM_data(old_csv_path: str, new_csv_path: str):
         new_csv_path: str, string path to new file which will not
             include DOM data
     """
-    with open(old_csv_path, "r") as file_input:
-        with open(new_csv_path, "w") as output:
+    new_file_path = file_path.split(".")[0] + "_DOM_removed" + file_path.split(".")[1]
+    with open(file_path, "r") as file_input:
+        with open(new_file_path, "w") as output:
             for line in file_input:
                 if "DOM" in line:
                     break
                 output.write(line)
-    logger.info("Successfully removed DOM Data")
+    logger.info("Successfully removed DOM Data from %s." % (file_path))
+    os.remove(file_path)
+    os.rename(new_file_path, file_path)
 
 
 def transform_data(
-    new_csv_path: str,
+    file_path: str,
     schema: dict,
     cols_to_drop: list,
+    cols_to_check_null: list,
     new_col_names_dict: dict,
-    transformed_parquet_path: str,
+    db_schema: dict,
 ):
     """
     This take the new csv file and creates a parquet with the correct
@@ -66,27 +70,21 @@ def transform_data(
     """
     try:
         data = (
-            polars.read_csv(new_csv_path, schema=schema)
+            polars.read_csv(file_path, schema=schema)
             .drop(cols_to_drop)
             .rename(new_col_names_dict)
-            .with_columns(polars.lit(datetime.today()).alias("date_added"))
+            .with_columns(polars.col("reading_date").str.to_date(format="%m/%d/%y"))
+            .drop_nulls(subset=cols_to_check_null)
         )
-        if "monitoring" in new_csv_path:
-            data = data.drop_nulls(subset=["state_well_number", "depth_to_water"])
-        else:
-            data = (
-                data.drop_nulls(subset="meter_reading_cfs_unrounded")
-                .filter(polars.col("meter_reading_cfs_unrounded") != "0.0")
-                .with_columns(polars.col("reading_date").str.to_date(format="%m/%d/%y"))
-            )
-        logger.info("Successfully transformed data.")
+        data = clean_up_numbers(data=data, db_schema=db_schema)
+        logger.info("Successfully transformed data from %s." % (file_path))
+        return data
     except:
         logging.exception("")
-    data.write_parquet(transformed_parquet_path)
-    return data
+        return
 
 
-def clean_up_numbers(data: polars.DataFrame, numcol: str) -> polars.DataFrame:
+def clean_up_numbers(data: polars.DataFrame, db_schema: dict) -> polars.DataFrame:
     """
     This removes special characters such as hypens and commas from
     numerical data so that it can be properly loaded.
@@ -97,20 +95,11 @@ def clean_up_numbers(data: polars.DataFrame, numcol: str) -> polars.DataFrame:
     Returns:
         polars.DataFrame, cleaned data
     """
-    data_without_special_chars = data.filter(
-        ~(polars.col(numcol).str.contains("-") | polars.col(numcol).str.contains(","))
-    ).with_columns(polars.col(numcol).cast(polars.Float64))
-
-    special_chars_data = data.filter(
-        (polars.col(numcol).str.contains("-") | polars.col(numcol).str.contains(","))
-    ).with_columns(polars.col(numcol).str.replace(",", ""))
-
-    special_chars_cleaned = special_chars_data.with_columns(
-        polars.when(polars.col(numcol).str.contains("-"))
-        .then(polars.col(numcol).str.replace("-", "").cast(polars.Float64) * -1)
-        .otherwise(polars.col(numcol).cast(polars.Float64))
-    )
-    return polars.concat([data_without_special_chars, special_chars_cleaned])
+    for col, type in db_schema.items():
+        if type not in ("real", "int", "numeric"):
+            continue
+        data = data.with_columns(polars.col(col).str.replace(",", ""))
+    return data
 
 
 def get_pg_connection(db_name: str) -> pg.extensions.connection:
@@ -231,43 +220,49 @@ if __name__ == "__main__":
         "--------------- Metro ETL ran on %s ----------------" % (datetime.today())
     )
 
-    if not os.listdir("data_dump"):
-        logger.info("No data is available for loading, quitting program.\n")
-        exit()
-
     data_type = ""
-    for data_file in os.listdir("data_dump"):
-        etl_yaml = load(open("yaml/etl_variables.yaml", "r"), Loader)
-        if "Depth" in data_file:
-            data_type = "monitoring"
-        elif "Production" in data_file:
-            data_type = "recovery"
+    etl_yaml = load(open("yaml/etl_variables.yaml", "r"), Loader)
+
+    data_types = ["recovery", "monitoring"]
+    for data_type in data_types:
+        logger.info("Running ETL for %s data" % (data_type))
+        data_dump_by_type = "data_dump/%s_data" % (data_type)
+        if not os.listdir(data_dump_by_type):
+            logger.info("No %s data is available for loading." % (data_type))
+            continue
+
         data_params = etl_yaml["data_types"][data_type]
+        data_dump_contianer = []
+        for file in os.listdir(data_dump_by_type):
+            file_path = f"{data_dump_by_type}/{file}"
+            remove_DOM_data(file_path)
 
-        remove_DOM_data(
-            old_csv_path=data_params["old_csv"], new_csv_path=data_params["new_csv"]
-        )
+            polars_schema = {
+                col: polars.String for col in data_params["col_name_mapping"].keys()
+            }
 
-        polars_schema = {col: polars.String for col in data_params["polars_schema"]}
+            proc_data = transform_data(
+                file_path=file_path,
+                schema=polars_schema,
+                cols_to_drop=data_params["cols_to_drop"],
+                cols_to_check_null=data_params["cols_to_check_null"],
+                new_col_names_dict=data_params["col_name_mapping"],
+                db_schema=data_params["db_schema"],
+            )
 
-        proc_data = transform_data(
-            new_csv_path=data_params["new_csv"],
-            schema=polars_schema,
-            cols_to_drop=data_params["cols_to_drop"],
-            new_col_names_dict=data_params["new_col_names"],
-            transformed_parquet_path=data_params["transformed_parquet"],
-        )
-
+            data_dump_contianer.append(proc_data)
+        proc_data = polars.concat(data_dump_contianer)
         load_data_into_pg_warehouse(
             data=proc_data,
             etl_yaml=etl_yaml,
             data_params=data_params,
         )
-        os.remove(data_params["new_csv"])
-        os.remove(data_params["old_csv"])
-        os.rename(
-            data_params["transformed_parquet"],
+        proc_data.write_parquet(
             "loaded_data/metro_%s_data_loaded_%s.parquet"
             % (data_type, datetime.date(datetime.today())),
         )
+        for file in os.listdir(data_dump_by_type):
+            file_path = f"{data_dump_by_type}/{file}"
+            os.remove(file_path)
+
     logger.info("Succesfully ran Metro ETL.\n")

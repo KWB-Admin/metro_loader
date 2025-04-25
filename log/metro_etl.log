@@ -1,0 +1,436 @@
+2024-10-14 11:34 - INFO - --------------- Metro ETL ran on 2024-10-14 11:34:39.606674 ----------------
+2024-10-14 11:34 - INFO - Successfully removed Delivery Data
+2024-10-14 11:34 - INFO - Successfully transformed data
+2024-10-14 11:34 - INFO - Successfully wrote .parquet file
+2024-10-14 11:34 - INFO - Successfully loaded data into kwb.kcwa.metro_water_depths_post_2020 
+
+2024-10-14 11:35 - INFO - --------------- Metro ETL ran on 2024-10-14 11:35:07.784488 ----------------
+2024-10-14 11:35 - INFO - Successfully removed Delivery Data
+2024-10-14 11:35 - INFO - Successfully transformed data
+2024-10-14 11:35 - INFO - Successfully wrote .parquet file
+2024-10-14 11:35 - INFO - Successfully loaded data into kwb.kcwa.metro_water_depths_post_2020 
+
+2024-10-14 11:36 - INFO - --------------- Metro ETL ran on 2024-10-14 11:36:58.066530 ----------------
+2024-10-14 11:36 - INFO - Successfully removed Delivery Data
+2024-10-14 11:36 - INFO - Successfully transformed data
+2024-10-14 11:36 - INFO - Successfully wrote .parquet file
+2024-10-14 11:36 - INFO - Successfully loaded data into kwb.kcwa.metro_water_depths_post_2020 
+
+2024-10-17 14:43 - INFO - --------------- Metro ETL ran on 2024-10-17 14:43:14.431615 ----------------
+2024-10-17 14:43 - INFO - No data is available for loading, quitting program.
+2024-12-05 10:19 - INFO - --------------- Metro ETL ran on 2024-12-05 10:19:51.355141 ----------------
+2024-12-05 10:20 - INFO - --------------- Metro ETL ran on 2024-12-05 10:20:23.884754 ----------------
+2024-12-05 10:20 - INFO - Successfully removed Delivery Data
+2024-12-05 10:20 - INFO - Successfully transformed data
+2024-12-05 10:20 - INFO - Successfully wrote .parquet file
+2024-12-05 10:21 - INFO - --------------- Metro ETL ran on 2024-12-05 10:21:05.962435 ----------------
+2024-12-05 10:21 - INFO - Successfully removed Delivery Data
+2024-12-05 10:21 - INFO - Successfully transformed data
+2024-12-05 10:21 - INFO - Successfully wrote .parquet file
+2024-12-05 11:24 - INFO - --------------- Metro ETL ran on 2024-12-05 11:24:42.899550 ----------------
+2024-12-05 11:24 - INFO - Successfully removed Delivery Data
+2024-12-05 11:24 - INFO - Successfully transformed data
+2024-12-05 11:24 - INFO - Successfully wrote .parquet file
+2024-12-05 11:24 - INFO - Successfully loaded data into kwb.kcwa.metro_water_levels_post_2020 
+
+2025-01-10 10:37 - INFO - --------------- Metro ETL ran on 2025-01-10 10:37:42.733110 ----------------
+2025-01-10 10:37 - INFO - Successfully removed Delivery Data
+2025-01-10 10:37 - INFO - Successfully transformed data
+2025-01-10 10:37 - INFO - Successfully wrote .parquet file
+2025-01-10 10:37 - INFO - Successfully loaded data into kwb.kcwa.metro_water_levels_post_2020 
+
+2025-02-05 14:32 - INFO - --------------- Metro ETL ran on 2025-02-05 14:32:37.707883 ----------------
+2025-02-05 14:32 - INFO - --------------- Metro ETL ran on 2025-02-05 14:32:59.210628 ----------------
+2025-02-05 14:32 - INFO - Successfully removed DOM Data
+2025-02-05 14:32 - ERROR - 
+Traceback (most recent call last):
+  File "C:\Users\mjohnson\Desktop\metro_loader\metro_etl.py", line 64, in transform_data
+    polars.read_csv(new_csv_path, schema=schema)
+  File "C:\Users\mjohnson\Desktop\metro_loader\.venv\lib\site-packages\polars\_utils\deprecation.py", line 92, in wrapper
+    return function(*args, **kwargs)
+  File "C:\Users\mjohnson\Desktop\metro_loader\.venv\lib\site-packages\polars\_utils\deprecation.py", line 92, in wrapper
+    return function(*args, **kwargs)
+  File "C:\Users\mjohnson\Desktop\metro_loader\.venv\lib\site-packages\polars\_utils\deprecation.py", line 92, in wrapper
+    return function(*args, **kwargs)
+  File "C:\Users\mjohnson\Desktop\metro_loader\.venv\lib\site-packages\polars\io\csv\functions.py", line 503, in read_csv
+    df = _read_csv_impl(
+  File "C:\Users\mjohnson\Desktop\metro_loader\.venv\lib\site-packages\polars\io\csv\functions.py", line 649, in _read_csv_impl
+    pydf = PyDataFrame.read_csv(
+TypeError: argument 'schema': 'str' is not a Polars data type
+2025-02-05 14:33 - INFO - --------------- Metro ETL ran on 2025-02-05 14:33:32.754133 ----------------
+2025-02-05 14:33 - INFO - Successfully removed DOM Data
+2025-02-05 14:37 - INFO - --------------- Metro ETL ran on 2025-02-05 14:37:22.205175 ----------------
+2025-02-05 14:37 - INFO - --------------- Metro ETL ran on 2025-02-05 14:37:36.036498 ----------------
+2025-02-05 14:37 - INFO - Successfully removed DOM Data
+2025-02-05 14:37 - INFO - Successfully transformed data
+2025-02-05 14:37 - INFO - Successfully wrote .parquet file
+2025-02-05 14:37 - INFO - Successfully loaded data into kwb.kcwa.metro_water_levels_post_2020 
+
+2025-02-06 11:32 - INFO - --------------- Metro ETL ran on 2025-02-06 11:32:12.508838 ----------------
+2025-02-06 11:32 - INFO - No data is available for loading, quitting program.
+2025-03-07 14:30 - INFO - --------------- Metro ETL ran on 2025-03-07 14:30:25.314050 ----------------
+2025-03-07 14:30 - INFO - Successfully removed DOM Data
+2025-03-07 14:30 - INFO - Successfully transformed data
+2025-03-07 14:30 - INFO - Successfully wrote .parquet file
+2025-03-07 14:30 - INFO - Successfully loaded data into kwb.kcwa.metro_water_levels_post_2020 
+
+2025-03-28 10:54 - INFO - --------------- Metro ETL ran on 2025-03-28 10:54:10.457685 ----------------
+2025-03-28 10:54 - INFO - No data is available for loading, quitting program.
+2025-03-28 11:05 - INFO - --------------- Metro ETL ran on 2025-03-28 11:05:04.335073 ----------------
+2025-03-28 11:05 - INFO - No data is available for loading, quitting program.
+
+2025-03-28 11:21 - INFO - --------------- Metro ETL ran on 2025-03-28 11:21:39.767200 ----------------
+2025-03-28 11:21 - INFO - No data is available for loading, quitting program.
+
+2025-03-28 15:21 - INFO - --------------- Metro ETL ran on 2025-03-28 15:21:34.773347 ----------------
+2025-03-28 15:21 - INFO - No data is available for loading, quitting program.
+
+2025-03-28 15:21 - INFO - --------------- Metro ETL ran on 2025-03-28 15:21:50.373990 ----------------
+2025-03-28 15:21 - INFO - No data is available for loading, quitting program.
+
+2025-04-03 15:01 - INFO - --------------- Metro ETL ran on 2025-04-03 15:01:44.625182 ----------------
+2025-04-03 15:02 - INFO - --------------- Metro ETL ran on 2025-04-03 15:02:09.139346 ----------------
+2025-04-03 15:02 - INFO - --------------- Metro ETL ran on 2025-04-03 15:02:22.855596 ----------------
+2025-04-03 15:04 - INFO - --------------- Metro ETL ran on 2025-04-03 15:04:43.590642 ----------------
+2025-04-03 15:04 - INFO - Successfully removed DOM Data
+2025-04-03 15:04 - INFO - Successfully transformed data.
+2025-04-03 15:04 - INFO - Successfully connected to kwb db
+2025-04-03 15:04 - INFO - Table exists, continue with loading.
+2025-04-03 15:07 - INFO - --------------- Metro ETL ran on 2025-04-03 15:07:47.527527 ----------------
+2025-04-03 15:07 - INFO - Successfully removed DOM Data
+2025-04-03 15:07 - INFO - Successfully transformed data.
+2025-04-03 15:07 - INFO - Successfully connected to kwb db
+2025-04-03 15:07 - INFO - Table exists, continue with loading.
+2025-04-03 15:09 - INFO - --------------- Metro ETL ran on 2025-04-03 15:09:19.576845 ----------------
+2025-04-03 15:09 - INFO - --------------- Metro ETL ran on 2025-04-03 15:09:39.476698 ----------------
+2025-04-03 15:09 - INFO - Successfully removed DOM Data
+2025-04-03 15:09 - INFO - Successfully transformed data.
+2025-04-03 15:09 - INFO - Successfully connected to kwb db
+2025-04-03 15:09 - INFO - Table exists, continue with loading.
+2025-04-03 15:10 - INFO - --------------- Metro ETL ran on 2025-04-03 15:10:32.759928 ----------------
+2025-04-03 15:10 - INFO - Successfully removed DOM Data
+2025-04-03 15:10 - ERROR - 
+Traceback (most recent call last):
+  File "C:\Users\mjohnson\Desktop\metro_loader\metro_etl.py", line 75, in transform_data
+    data = data.drop_nulls(subset="measurement")
+  File "C:\Users\mjohnson\Desktop\metro_loader\.venv\lib\site-packages\polars\dataframe\frame.py", line 5724, in drop_nulls
+    return self.lazy().drop_nulls(subset).collect(_eager=True)
+  File "C:\Users\mjohnson\Desktop\metro_loader\.venv\lib\site-packages\polars\lazyframe\frame.py", line 2050, in collect
+    return wrap_df(ldf.collect(callback))
+polars.exceptions.ColumnNotFoundError: unable to find column "measurement"; valid columns: ["state_well_number", "reading_date", "depth_to_water", "date_added"]
+
+Resolved plan until failure:
+
+	---> FAILED HERE RESOLVING 'filter' <---
+DF ["state_well_number", "reading_date", "depth_to_water", "date_added"]; PROJECT */4 COLUMNS; SELECTION: None
+2025-04-03 15:10 - INFO - Successfully connected to kwb db
+2025-04-03 15:10 - INFO - Table exists, continue with loading.
+2025-04-03 15:12 - INFO - --------------- Metro ETL ran on 2025-04-03 15:12:19.243427 ----------------
+2025-04-03 15:12 - INFO - Successfully removed DOM Data
+2025-04-03 15:12 - ERROR - 
+Traceback (most recent call last):
+  File "C:\Users\mjohnson\Desktop\metro_loader\metro_etl.py", line 75, in transform_data
+    data = data.drop_nulls(subset="measurement")
+  File "C:\Users\mjohnson\Desktop\metro_loader\.venv\lib\site-packages\polars\dataframe\frame.py", line 5724, in drop_nulls
+    return self.lazy().drop_nulls(subset).collect(_eager=True)
+  File "C:\Users\mjohnson\Desktop\metro_loader\.venv\lib\site-packages\polars\lazyframe\frame.py", line 2050, in collect
+    return wrap_df(ldf.collect(callback))
+polars.exceptions.ColumnNotFoundError: unable to find column "measurement"; valid columns: ["state_well_number", "reading_date", "depth_to_water", "date_added"]
+
+Resolved plan until failure:
+
+	---> FAILED HERE RESOLVING 'filter' <---
+DF ["state_well_number", "reading_date", "depth_to_water", "date_added"]; PROJECT */4 COLUMNS; SELECTION: None
+2025-04-03 15:12 - INFO - Successfully connected to kwb db
+2025-04-03 15:12 - INFO - Table exists, continue with loading.
+2025-04-03 15:12 - INFO - --------------- Metro ETL ran on 2025-04-03 15:12:47.626614 ----------------
+2025-04-03 15:12 - INFO - Successfully removed DOM Data
+2025-04-03 15:12 - ERROR - 
+Traceback (most recent call last):
+  File "C:\Users\mjohnson\Desktop\metro_loader\metro_etl.py", line 75, in transform_data
+    data = data.drop_nulls(subset="measurement")
+  File "C:\Users\mjohnson\Desktop\metro_loader\.venv\lib\site-packages\polars\dataframe\frame.py", line 5724, in drop_nulls
+    return self.lazy().drop_nulls(subset).collect(_eager=True)
+  File "C:\Users\mjohnson\Desktop\metro_loader\.venv\lib\site-packages\polars\lazyframe\frame.py", line 2050, in collect
+    return wrap_df(ldf.collect(callback))
+polars.exceptions.ColumnNotFoundError: unable to find column "measurement"; valid columns: ["state_well_number", "reading_date", "depth_to_water", "date_added"]
+
+Resolved plan until failure:
+
+	---> FAILED HERE RESOLVING 'filter' <---
+DF ["state_well_number", "reading_date", "depth_to_water", "date_added"]; PROJECT */4 COLUMNS; SELECTION: None
+2025-04-03 15:12 - INFO - Successfully connected to kwb db
+2025-04-03 15:12 - INFO - Table exists, continue with loading.
+2025-04-03 15:14 - INFO - --------------- Metro ETL ran on 2025-04-03 15:14:08.210108 ----------------
+2025-04-03 15:14 - INFO - --------------- Metro ETL ran on 2025-04-03 15:14:16.359911 ----------------
+2025-04-03 15:14 - INFO - Successfully removed DOM Data
+2025-04-03 15:14 - INFO - Successfully transformed data.
+2025-04-03 15:14 - INFO - Successfully connected to kwb db
+2025-04-03 15:14 - INFO - Table exists, continue with loading.
+2025-04-03 15:14 - INFO - Data was successfully loaded to kwb.kcwa.metro_water_levels_post_2020
+2025-04-03 15:14 - INFO - --------------- Metro ETL ran on 2025-04-03 15:14:47.176604 ----------------
+2025-04-03 15:14 - INFO - Successfully removed DOM Data
+2025-04-03 15:14 - INFO - Successfully transformed data.
+2025-04-03 15:14 - INFO - Successfully connected to kwb db
+2025-04-03 15:14 - INFO - Table exists, continue with loading.
+2025-04-03 15:14 - INFO - Data was successfully loaded to kwb.kcwa.metro_water_levels_post_2020
+2025-04-03 15:14 - INFO - Succesfully ran Metro ETL.
+
+2025-04-07 13:19 - INFO - --------------- Metro ETL ran on 2025-04-07 13:19:56.133936 ----------------
+2025-04-07 13:19 - INFO - No data is available for loading, quitting program.
+
+2025-04-25 10:47 - INFO - --------------- Metro ETL ran on 2025-04-25 10:47:59.725171 ----------------
+2025-04-25 10:47 - INFO - No recovery data is available for loading.
+2025-04-25 10:48 - INFO - No monitoring data is available for loading.
+2025-04-25 10:57 - INFO - --------------- Metro ETL ran on 2025-04-25 10:57:29.363869 ----------------
+2025-04-25 10:57 - INFO - Running ETL for recovery data
+2025-04-25 10:57 - INFO - No recovery data is available for loading.
+2025-04-25 10:57 - INFO - Running ETL for monitoring data
+2025-04-25 10:57 - INFO - No monitoring data is available for loading.
+2025-04-25 10:57 - INFO - Succesfully ran Metro ETL.
+
+2025-04-25 10:58 - INFO - --------------- Metro ETL ran on 2025-04-25 10:58:24.630730 ----------------
+2025-04-25 10:58 - INFO - Running ETL for recovery data
+2025-04-25 10:59 - INFO - --------------- Metro ETL ran on 2025-04-25 10:59:05.099886 ----------------
+2025-04-25 10:59 - INFO - Running ETL for recovery data
+2025-04-25 11:02 - INFO - --------------- Metro ETL ran on 2025-04-25 11:02:02.979645 ----------------
+2025-04-25 11:02 - INFO - Running ETL for recovery data
+2025-04-25 11:06 - INFO - --------------- Metro ETL ran on 2025-04-25 11:06:55.597904 ----------------
+2025-04-25 11:06 - INFO - Running ETL for recovery data
+2025-04-25 11:12 - INFO - --------------- Metro ETL ran on 2025-04-25 11:12:01.890506 ----------------
+2025-04-25 11:12 - INFO - Running ETL for recovery data
+2025-04-25 11:12 - INFO - Successfully removed DOM Data
+2025-04-25 11:17 - INFO - --------------- Metro ETL ran on 2025-04-25 11:17:08.997013 ----------------
+2025-04-25 11:17 - INFO - Running ETL for recovery data
+2025-04-25 11:17 - INFO - Successfully removed DOM Data
+2025-04-25 11:20 - INFO - --------------- Metro ETL ran on 2025-04-25 11:20:34.506465 ----------------
+2025-04-25 11:20 - INFO - Running ETL for recovery data
+2025-04-25 11:20 - INFO - Successfully removed DOM Data
+2025-04-25 11:20 - INFO - --------------- Metro ETL ran on 2025-04-25 11:20:51.389473 ----------------
+2025-04-25 11:20 - INFO - Running ETL for recovery data
+2025-04-25 11:20 - INFO - Successfully removed DOM Data
+2025-04-25 11:20 - INFO - Successfully transformed data.
+2025-04-25 11:21 - INFO - Successfully removed DOM Data
+2025-04-25 11:21 - INFO - Successfully transformed data.
+2025-04-25 11:24 - INFO - --------------- Metro ETL ran on 2025-04-25 11:24:41.844624 ----------------
+2025-04-25 11:24 - INFO - Running ETL for recovery data
+2025-04-25 11:24 - INFO - Successfully removed DOM Data
+2025-04-25 11:24 - INFO - Successfully transformed data.
+2025-04-25 11:25 - INFO - --------------- Metro ETL ran on 2025-04-25 11:25:17.228474 ----------------
+2025-04-25 11:25 - INFO - Running ETL for recovery data
+2025-04-25 11:25 - INFO - Successfully removed DOM Data
+2025-04-25 11:27 - INFO - --------------- Metro ETL ran on 2025-04-25 11:27:44.450863 ----------------
+2025-04-25 11:27 - INFO - Running ETL for recovery data
+2025-04-25 11:27 - INFO - Successfully removed DOM Data
+2025-04-25 11:27 - INFO - Successfully transformed data.
+2025-04-25 11:27 - INFO - Successfully removed DOM Data
+2025-04-25 11:27 - INFO - Successfully transformed data.
+2025-04-25 11:27 - INFO - Successfully connected to kwb db
+2025-04-25 11:27 - INFO - Table exists, continue with loading.
+2025-04-25 11:28 - INFO - --------------- Metro ETL ran on 2025-04-25 11:28:58.856494 ----------------
+2025-04-25 11:28 - INFO - Running ETL for recovery data
+2025-04-25 11:28 - INFO - Successfully removed DOM Data
+2025-04-25 11:28 - INFO - Successfully transformed data.
+2025-04-25 11:28 - INFO - Successfully removed DOM Data
+2025-04-25 11:28 - INFO - Successfully transformed data.
+2025-04-25 11:28 - INFO - Successfully connected to kwb db
+2025-04-25 11:28 - INFO - Table exists, continue with loading.
+2025-04-25 11:30 - INFO - --------------- Metro ETL ran on 2025-04-25 11:30:35.236029 ----------------
+2025-04-25 11:30 - INFO - Running ETL for recovery data
+2025-04-25 11:30 - INFO - Successfully removed DOM Data
+2025-04-25 11:30 - INFO - Successfully transformed data.
+2025-04-25 11:30 - INFO - Successfully removed DOM Data
+2025-04-25 11:30 - INFO - Successfully transformed data.
+2025-04-25 11:30 - INFO - Successfully connected to kwb db
+2025-04-25 11:30 - INFO - Table exists, continue with loading.
+2025-04-25 11:34 - INFO - --------------- Metro ETL ran on 2025-04-25 11:34:18.185561 ----------------
+2025-04-25 11:34 - INFO - Running ETL for recovery data
+2025-04-25 11:34 - INFO - Successfully removed DOM Data
+2025-04-25 11:34 - ERROR - 
+Traceback (most recent call last):
+  File "c:\Users\mjohnson\Desktop\metro_loader\metro_etl.py", line 79, in transform_data
+    data = clean_up_numbers(data=data, db_schema=db_schema)
+  File "c:\Users\mjohnson\Desktop\metro_loader\metro_etl.py", line 98, in clean_up_numbers
+    for col, type in db_schema:
+ValueError: too many values to unpack (expected 2)
+2025-04-25 11:34 - INFO - Successfully removed DOM Data
+2025-04-25 11:34 - ERROR - 
+Traceback (most recent call last):
+  File "c:\Users\mjohnson\Desktop\metro_loader\metro_etl.py", line 79, in transform_data
+    data = clean_up_numbers(data=data, db_schema=db_schema)
+  File "c:\Users\mjohnson\Desktop\metro_loader\metro_etl.py", line 98, in clean_up_numbers
+    for col, type in db_schema:
+ValueError: too many values to unpack (expected 2)
+2025-04-25 11:34 - INFO - --------------- Metro ETL ran on 2025-04-25 11:34:34.736934 ----------------
+2025-04-25 11:34 - INFO - Running ETL for recovery data
+2025-04-25 11:34 - INFO - Successfully removed DOM Data
+2025-04-25 11:34 - INFO - --------------- Metro ETL ran on 2025-04-25 11:34:59.752873 ----------------
+2025-04-25 11:34 - INFO - Running ETL for recovery data
+2025-04-25 11:34 - INFO - Successfully removed DOM Data
+2025-04-25 11:35 - INFO - --------------- Metro ETL ran on 2025-04-25 11:35:10.721152 ----------------
+2025-04-25 11:35 - INFO - Running ETL for recovery data
+2025-04-25 11:35 - INFO - Successfully removed DOM Data
+2025-04-25 11:35 - INFO - --------------- Metro ETL ran on 2025-04-25 11:35:24.619567 ----------------
+2025-04-25 11:35 - INFO - Running ETL for recovery data
+2025-04-25 11:35 - INFO - Successfully removed DOM Data
+2025-04-25 11:35 - INFO - --------------- Metro ETL ran on 2025-04-25 11:35:51.712808 ----------------
+2025-04-25 11:35 - INFO - Running ETL for recovery data
+2025-04-25 11:35 - INFO - Successfully removed DOM Data
+2025-04-25 11:36 - INFO - Successfully transformed data.
+2025-04-25 11:36 - INFO - Successfully removed DOM Data
+2025-04-25 11:36 - INFO - Successfully transformed data.
+2025-04-25 11:36 - INFO - Successfully connected to kwb db
+2025-04-25 11:36 - INFO - Table exists, continue with loading.
+2025-04-25 11:36 - INFO - Data was successfully loaded to kwb.kcwa.metro_recovery_data
+2025-04-25 11:37 - INFO - --------------- Metro ETL ran on 2025-04-25 11:37:52.435555 ----------------
+2025-04-25 11:37 - INFO - Running ETL for recovery data
+2025-04-25 11:37 - INFO - Successfully removed DOM Data
+2025-04-25 11:37 - INFO - Successfully transformed data.
+2025-04-25 11:37 - INFO - Successfully removed DOM Data
+2025-04-25 11:37 - INFO - Successfully transformed data.
+2025-04-25 11:37 - INFO - Successfully connected to kwb db
+2025-04-25 11:37 - INFO - Table exists, continue with loading.
+2025-04-25 11:37 - INFO - Data was successfully loaded to kwb.kcwa.metro_recovery_data
+2025-04-25 11:38 - INFO - --------------- Metro ETL ran on 2025-04-25 11:38:24.571258 ----------------
+2025-04-25 11:38 - INFO - Running ETL for recovery data
+2025-04-25 11:38 - INFO - Successfully removed DOM Data
+2025-04-25 11:38 - INFO - Successfully transformed data.
+2025-04-25 11:38 - INFO - Successfully removed DOM Data
+2025-04-25 11:38 - INFO - Successfully transformed data.
+2025-04-25 11:38 - INFO - Successfully connected to kwb db
+2025-04-25 11:38 - INFO - Table exists, continue with loading.
+2025-04-25 11:38 - INFO - Data was successfully loaded to kwb.kcwa.metro_recovery_data
+2025-04-25 11:38 - INFO - --------------- Metro ETL ran on 2025-04-25 11:38:48.737114 ----------------
+2025-04-25 11:38 - INFO - Running ETL for recovery data
+2025-04-25 11:38 - INFO - Successfully removed DOM Data
+2025-04-25 11:38 - INFO - Successfully transformed data.
+2025-04-25 11:38 - INFO - Successfully removed DOM Data
+2025-04-25 11:38 - INFO - Successfully transformed data.
+2025-04-25 11:38 - INFO - Successfully connected to kwb db
+2025-04-25 11:38 - INFO - Table exists, continue with loading.
+2025-04-25 11:38 - INFO - Data was successfully loaded to kwb.kcwa.metro_recovery_data
+2025-04-25 11:38 - INFO - Running ETL for monitoring data
+2025-04-25 11:38 - INFO - No monitoring data is available for loading.
+2025-04-25 11:38 - INFO - Succesfully ran Metro ETL.
+
+2025-04-25 11:45 - INFO - --------------- Metro ETL ran on 2025-04-25 11:45:12.433944 ----------------
+2025-04-25 11:45 - INFO - Running ETL for recovery data
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully removed DOM Data
+2025-04-25 11:45 - INFO - Successfully transformed data.
+2025-04-25 11:45 - INFO - Successfully connected to kwb db
+2025-04-25 11:45 - INFO - Table exists, continue with loading.
+2025-04-25 11:45 - INFO - Data was successfully loaded to kwb.kcwa.metro_recovery_data
+2025-04-25 11:45 - INFO - Running ETL for monitoring data
+2025-04-25 11:45 - INFO - No monitoring data is available for loading.
+2025-04-25 11:45 - INFO - Succesfully ran Metro ETL.
+

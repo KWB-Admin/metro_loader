@@ -1,0 +1,19 @@
+db_name: "kwb"
+schema: "kcwa"
+table_name: "metro_water_levels_post_2020"
+prim_key: "state_well_number, reading_date"
+
+old_csv: "data_dump/Well Water Depth.csv"
+new_csv: "data_dump/metro_monitoring_data_without_dom.csv"
+transformed_parquet: "data_dump/metro_monitoring_data_ready_to_load.parquet"
+
+cols_to_drop: ["Pool1", "Project1"]
+
+new_col_names:
+  {
+    "FacilityName1": "state_well_number",
+    "Textbox56": "reading_date",
+    "Textbox57": "measurement",
+  }
+
+polars_schema: ["Pool1", "Project1", "FacilityName1", "Textbox56", "Textbox57"]

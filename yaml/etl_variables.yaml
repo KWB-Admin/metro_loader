@@ -1,0 +1,69 @@
+db_name: "kwb"
+schema_name: "kcwa"
+data_types:
+  monitoring:
+    table_name: "metro_water_levels_post_2020"
+    prim_key: "state_well_number, reading_date"
+    update_col: "depth_to_water"
+
+    old_csv: "data_dump/monitoring_data/Well Water Depth.csv"
+    new_csv: "data_dump/monitoring_data/metro_monitoring_data_without_dom.csv"
+    transformed_parquet: "data_dump/metro_monitoring_data_ready_to_load.parquet"
+
+    cols_to_drop: ["Pool1", "Project1"]
+
+    col_name_mapping:
+      {
+        "Pool1": "pool",
+        "Project1": "project",
+        "FacilityName1": "state_well_number",
+        "Textbox56": "reading_date",
+        "Textbox57": "depth_to_water",
+      }
+
+    db_schema:
+      {
+        "state_well_number": str,
+        "reading_date": date,
+        "depth_to_water": float64,
+      }
+  recovery:
+    table_name: "metro_recovery_data"
+    prim_key: "well_number, reading_date"
+    update_col: "cfs"
+
+    cols_to_drop: []
+
+    col_name_mapping:
+      {
+        "Pool1": pool,
+        "Project1": project,
+        "FacilityName1": well_number,
+        "Textbox56": reading_date,
+        "Textbox57": cfs,
+        "Textbox68": total_cfs_per_well_per_report,
+        "Textbox101": total_cfs_per_day_for_all_wells,
+        "Textbox102": total_cfs_per_report,
+        "Delivery6": total_af_per_day_all_wells_rounded,
+        "Delivery8": total_af_per_report_rounded,
+        "Delivery7": total_af_per_day_all_wells_unrounded,
+        "Delivery9": total_af_per_report_unrounded,
+      }
+
+    cols_to_check_null: ["cfs"]
+
+    db_schema:
+      {
+        "pool": str,
+        "project": str,
+        "well_number": str,
+        "reading_date": date,
+        "cfs": real,
+        "total_cfs_per_well_per_report": real,
+        "total_cfs_per_day_for_all_wells": real,
+        "total_cfs_per_report": real,
+        "total_af_per_day_all_wells_rounded": int,
+        "total_af_per_report_rounded": int,
+        "total_af_per_day_all_wells_unrounded": real,
+        "total_af_per_report_unrounded": real,
+      }

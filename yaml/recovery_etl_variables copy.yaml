@@ -1,0 +1,44 @@
+db_name: "kwb"
+schema: "kcwa"
+table_name: "metro_metro_recovery_data"
+prim_key: "pool, state_well_number, reading_date"
+
+old_csv: "data_dump/Well Production.csv"
+new_csv: "data_dump/metro_production_data_without_dom.csv"
+transformed_parquet: "data_dump/metro_production_data_ready_to_load.parquet"
+
+cols_to_drop:
+  [
+    "Project1",
+    "Textbox101",
+    "Textbox102",
+    "Textbox68",
+    "Delivery6",
+    "Delivery8",
+    "Delivery9",
+  ]
+
+new_col_names:
+  {
+    "Pool1": "pool",
+    "FacilityName1": "state_well_number",
+    "Textbox56": "reading_date",
+    "Textbox57": "meter_reading_cfs_unrounded",
+    "Delivery7": "acre_feet_unrounded",
+  }
+
+polars_schema:
+  [
+    "Pool1",
+    "Project1",
+    "FacilityName1",
+    "Textbox56",
+    "Textbox57",
+    "Textbox68",
+    "Textbox101",
+    "Textbox102",
+    "Delivery6",
+    "Delivery8",
+    "Delivery7",
+    "Delivery9",
+  ]
